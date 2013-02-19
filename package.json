@@ -1,9 +1,10 @@
 {
   "name": "lodash",
-  "version": "1.0.1",
-  "description": "An alternative to Underscore.js, delivering consistency, customization, performance, and extra features.",
-  "homepage": "http://lodash.com",
-  "main": "./dist/lodash",
+  "version": "1.0.2",
+  "description": "A utility library delivering consistency, customization, performance, and extras.",
+  "homepage": "https://lodash.com/",
+  "license": "MIT",
+  "main": "./dist/lodash.js",
   "keywords": [
     "browser",
     "client",
@@ -13,40 +14,45 @@
     "speed",
     "util"
   ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://lodash.com/license"
-    }
-  ],
   "author": {
     "name": "John-David Dalton",
     "email": "john.david.dalton@gmail.com",
-    "web": "http://allyoucanleet.com/"
+    "url": "http://allyoucanleet.com/"
   },
+  "contributors": [
+    {
+      "name": "John-David Dalton",
+      "email": "john.david.dalton@gmail.com",
+      "url": "http://allyoucanleet.com/"
+    },
+    {
+      "name": "Blaine Bublitz",
+      "email": "blaine@iceddev.com",
+      "url": "http://iceddev.com/"
+    },
+    {
+      "name": "Kit Cambridge",
+      "email": "github@kitcambridge.be",
+      "url": "http://kitcambridge.be/"
+    },
+    {
+      "name": "Mathias Bynens",
+      "email": "mathias@qiwi.be",
+      "url": "http://mathiasbynens.be/"
+    }
+  ],
   "bugs": {
-    "url": "https://github.com/bestiejs/lodash/issues"
+    "url": "https://github.com/lodash/lodash/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bestiejs/lodash.git"
-  },
-  "bin": {
-    "lodash": "./build.js"
-  },
-  "directories": {
-    "doc": "./doc",
-    "test": "./test"
+    "url": "https://github.com/lodash/lodash.git"
   },
   "engines": [
     "node",
     "rhino"
   ],
   "jam": {
-    "main": "./lodash.js"
-  },
-  "scripts": {
-    "build": "node ./build.js",
-    "test": "node ./test/test.js ./dist/lodash.js && node ./test/test.js ./dist/lodash.min.js && node ./test/test-build.js"
+    "main": "./dist/lodash.compat.js"
   }
 }

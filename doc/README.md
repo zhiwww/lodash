@@ -3316,7 +3316,7 @@ Note: In the development build, `_.template` utilizes sourceURLs for easier debu
 Note: Lo-Dash may be used in Chrome extensions by either creating a `lodash csp` build and using precompiled templates, or loading Lo-Dash in a sandbox.
 
 For more information on precompiling templates see:<br>
-http://lodash.com/#custom-builds
+https://lodash.com/#custom-builds
 
 For more information on Chrome extension sandboxes see:<br>
 http://developer.chrome.com/stable/extensions/sandboxingEval.html

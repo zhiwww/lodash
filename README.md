@@ -10,6 +10,13 @@ $ lodash modern exports=amd -d -o ./main.js
 
 ## Installation
 
+Using bower or volo:
+
+```bash
+$ bower i lodash#3.6.0-amd
+$ volo add lodash/3.6.0-amd
+```
+
 Defining a build as `'lodash'`.
 
 ```js

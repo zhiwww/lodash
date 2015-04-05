@@ -112,5 +112,5 @@ lodash is also available in a variety of other builds & module formats.
 
 ## Support
 
-Tested in Chrome 40-41, Firefox 35-36, IE 6-11, Opera 27-28, Safari 5-8, io.js 1.6.2, Node.js 0.8.28, 0.10.36, & 0.12.0, PhantomJS 1.9.8, RingoJS 0.11, & Rhino 1.7RC5.
+Tested in Chrome 40-41, Firefox 36-37, IE 6-11, Opera 27-28, Safari 5-8, io.js 1.6.3, Node.js 0.8.28, 0.10.38, & 0.12.2, PhantomJS 1.9.8, RingoJS 0.11, & Rhino 1.7RC5.
 Automated [browser](https://saucelabs.com/u/lodash) & [CI](https://travis-ci.org/lodash/lodash/) test runs are available. Special thanks to [Sauce Labs](https://saucelabs.com/) for providing automated browser testing.

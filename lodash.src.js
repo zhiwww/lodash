@@ -223,6 +223,14 @@
     '\xdf': 'ss'
   };
 
+  /** Used as a reusable the property descriptor. */
+  var descriptor = {
+    'configurable': false,
+    'enumerable': true,
+    'value': null,
+    'writable': false
+  };
+
   /** Used to map characters to HTML entities. */
   var htmlEscapes = {
     '&': '&amp;',
@@ -781,6 +789,17 @@
         Uint8Array = isNative(Uint8Array = context.Uint8Array) && Uint8Array,
         WeakMap = isNative(WeakMap = context.WeakMap) && WeakMap;
 
+    /** Used to set index values on string objects. */
+    var defineProperty = (function() {
+      // IE 8 only accepts DOM elements.
+      try {
+        var o = {},
+            func = isNative(func = Object.defineProperty) && func,
+            result = func(o, o, o) && func;
+      } catch(e) { }
+      return result;
+    }());
+
     /** Used to clone array buffers. */
     var Float64Array = (function() {
       // Safari 5 errors when using an array buffer to initialize a typed array
@@ -1063,8 +1082,7 @@
       support.nodeTag = objToString.call(document) != objectTag;
 
       /**
-       * Detect if string indexes are non-enumerable
-       * (IE < 9, RingoJS, Rhino, Narwhal).
+       * Detect if string indexes are non-enumerable (IE < 9, RingoJS, Rhino, Narwhal).
        *
        * @memberOf _.support
        * @type boolean
@@ -1072,8 +1090,7 @@
       support.nonEnumStrings = !propertyIsEnumerable.call('x', 0);
 
       /**
-       * Detect if properties shadowing those on `Object.prototype` are
-       * non-enumerable.
+       * Detect if properties shadowing those on `Object.prototype` are non-enumerable.
        *
        * In IE < 9 an object's own properties, shadowing non-enumerable ones,
        * are made non-enumerable as well (a.k.a the JScript `[[DontEnum]]` bug).
@@ -1095,11 +1112,11 @@
        * Detect if `Array#shift` and `Array#splice` augment array-like objects
        * correctly.
        *
-       * Firefox < 10, compatibility modes of IE 8, and IE < 9 have buggy Array `shift()`
-       * and `splice()` functions that fail to remove the last element, `value[0]`,
-       * of array-like objects even though the "length" property is set to `0`.
-       * The `shift()` method is buggy in compatibility modes of IE 8, while `splice()`
-       * is buggy regardless of mode in IE < 9.
+       * Firefox < 10, compatibility modes of IE 8, and IE < 9 have buggy Array
+       * `shift()` and `splice()` functions that fail to remove the last element,
+       * `value[0]`, of array-like objects even though the "length" property is
+       * set to `0`. The `shift()` method is buggy in compatibility modes of IE 8,
+       * while `splice()` is buggy regardless of mode in IE < 9.
        *
        * @memberOf _.support
        * @type boolean
@@ -4575,6 +4592,33 @@
     }
 
     /**
+     * Converts `value` to an object if it is not one.
+     *
+     * @private
+     * @param {*} value The value to process.
+     * @returns {Object} Returns the object.
+     */
+    function toObject(value) {
+      var support = lodash.support;
+      if ((support.nonEnumStrings || support.unindexedChars) && isString(value)) {
+        var index = -1,
+            length = value.length,
+            result = Object(value);
+
+        while (++index < length) {
+          var chr = value.charAt(index);
+          if (defineProperty) {
+            defineProperty(result, index, (descriptor.value = chr, descriptor));
+          } else {
+            result[index] = chr;
+          }
+        }
+        return result;
+      }
+      return isObject(value) ? value : Object(value);
+    }
+
+    /**
      * Converts `value` to property path array if it is not one.
      *
      * @private
@@ -4590,27 +4634,6 @@
         result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
       });
       return result;
-    }
-
-    /**
-     * Converts `value` to an object if it is not one.
-     *
-     * @private
-     * @param {*} value The value to process.
-     * @returns {Object} Returns the object.
-     */
-    function toObject(value) {
-      if (lodash.support.unindexedChars && isString(value)) {
-        var index = -1,
-            length = value.length,
-            result = Object(value);
-
-        while (++index < length) {
-          result[index] = value.charAt(index);
-        }
-        return result;
-      }
-      return isObject(value) ? value : Object(value);
     }
 
     /**
@@ -9523,6 +9546,8 @@
       if (object == null) {
         return false;
       }
+      object = toObject(object);
+
       var pathKey = isArray(path) ? undefined : (path + ''),
           result = typeof pathKey != 'undefined' && hasOwnProperty.call(object, path);
 
